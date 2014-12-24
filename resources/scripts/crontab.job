@@ -1,0 +1,6 @@
+#minute hour dom month dow
+#every day at 8am, 10am, 3pm, 6pm, 8pm, and 10pm
+#0 8,10,15,18,20,22 * * * ~/programs/eyedeal/scripts/startup.sh > /var/log/cron/eyedeal.log 2>&1
+
+#every hour of every day
+0 * * * * ~/programs/eyedeal/scripts/startup.sh > /var/log/cron/eyedeal.log 2>&1

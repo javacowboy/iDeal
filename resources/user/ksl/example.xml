@@ -1,0 +1,63 @@
+<list>
+  <ksl>
+    <description>A simple search that only searches by keywords</description>
+    <keywords>
+    	<string>Canon Mark 3</string>
+    </keywords>
+  </ksl>
+  <ksl>
+    <description>A simple search that looks for any item in subcategory NIGHTSTANDS under $20</description>
+    <subCategory>NIGHTSTANDS</subCategory>
+    <maxPrice>20</maxPrice>
+  </ksl>
+  <ksl>
+    <description>Search subcategory HANDGUNS for keywords Kimber and Custom under $700.  titleMustMatchKeywords is set to true to weed out descriptions like I will trade my Glock for a Kimber Custom</description>
+    <subCategory>HANDGUNS</subCategory>
+    <keywords>
+      <string>Kimber</string>
+      <string>Custom</string>
+    </keywords>
+    <titleMustMatchKeywords>true</titleMustMatchKeywords>
+    <maxPrice>700</maxPrice>
+  </ksl>
+  <ksl>
+    <description>Search category (not subcategory) FIREARMS for a 1911 under $500.  This may return handguns and holsters for a 1911.</description>
+    <category>FIREARMS</category>
+    <keywords>
+      <string>1911</string>
+    </keywords>
+    <maxPrice>500</maxPrice>
+  </ksl>
+  <ksl>
+    <description>Search the subcategory HANDGUNS for 1911 to weed out holsters.  Also ignore a 1911 that is a .22 or 9mm.  And ignore descriptions like I will trade my gun for a 1911.</description>
+    <subCategory>HANDGUNS</subCategory>
+    <keywords>
+      <string>1911</string>
+    </keywords>
+    <ignoreWords>
+      <string>1911-22</string>
+      <string>22LR</string>
+      <string>9mm</string>
+    </ignoreWords>
+    <titleMustMatchKeywords>true</titleMustMatchKeywords>
+    <maxPrice>500</maxPrice>
+  </ksl>
+  <ksl>
+    <description>Another example of searching a subcategory based on keywords and price.</description>
+    <subCategory>RIFLES</subCategory>
+    <keywords>
+      <string>Remington</string>
+      <string>700</string>
+      <string>scope</string>
+    </keywords>
+    <maxPrice>500</maxPrice>
+  </ksl>
+  <ksl>
+    <description>Search for any mountain bike within 25 miles from Lehi (84043).</description>
+    <subCategory>BIKES_MOUNTAIN</subCategory>
+    <distance>
+      <zipCode>84043</zipCode>
+      <miles>25</miles>
+    </distance>
+  </ksl>
+</list>

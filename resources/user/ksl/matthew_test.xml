@@ -1,0 +1,30 @@
+<list>
+  <ksl>
+    <subCategory>SCOPES_AND_OPTICS</subCategory>
+    <keywords>
+      <string>Swarovski</string>
+      <string>Binocular</string>
+    </keywords>
+    <maxPrice>1700</maxPrice>
+  </ksl>
+  <ksl>
+    <subCategory>SCOPES_AND_OPTICS</subCategory>
+    <keywords>
+      <string>vortex</string>
+      <string>kaibab</string>
+    </keywords>
+  </ksl>
+  <ksl>
+    <description>Search for any mountain bike within 25 miles from Lehi (84043).</description>
+    <subCategory>BIKES_MOUNTAIN</subCategory>
+    <distance>
+      <zipCode>84043</zipCode>
+      <miles>25</miles>
+    </distance>
+  </ksl>
+  <ksl>
+  	<keywords>
+  		<string>canon mark 3</string>
+  	</keywords>
+  </ksl>
+</list>

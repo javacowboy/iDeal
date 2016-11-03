@@ -139,14 +139,15 @@ public class KslService extends Service {
 	}
     
 	protected Long parseAdId(Element result) {
-    	String adIdKey = "ad=";
+		// /classifieds/listing/41761997?cat=405&lpid=&search=Swarovski Binocular&ad_cid=1
+		String startAfter = "listing/";
 		String href = parseAdHref(result);
 		if(href != null) {
-			String[] params = href.replace("?", "").split("&");
-			for(String param : params) {
-				if(param.startsWith(adIdKey)) {
-					return getLongValue(param.replace(adIdKey, ""));
-				}
+			int begin = href.indexOf(startAfter);
+			int end = href.indexOf("?");
+			if(begin > -1 && end > -1) {
+				begin += startAfter.length();
+				return getLongValue(href.substring(begin, end));
 			}
 		}
 		return null;

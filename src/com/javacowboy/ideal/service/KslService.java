@@ -43,7 +43,7 @@ public class KslService extends Service {
     	logger.info(url);
     	String resultPageHtml = getUrlHtml(url);
     	try {
-    	return parseHtml(param, resultPageHtml);
+    		return parseHtml(param, resultPageHtml);
     	}catch (Exception e) {
 			return null;
 		}

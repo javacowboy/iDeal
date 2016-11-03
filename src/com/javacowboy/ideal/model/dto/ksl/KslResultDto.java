@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class KslResultDto {
 	
-	public static final String ROOT_URL = "http://www.ksl.com/index.php";
+	public static final String ROOT_URL = "http://www.ksl.com";
 	
 	protected Float price;
 	protected Float originalPrice; //set when db comparison happens
@@ -43,7 +43,7 @@ public class KslResultDto {
 	}
 
 	public void setAdHref(String adHref) {
-		if(adHref.startsWith("?")) {
+		if(adHref.startsWith("/")) {
 			adHref = ROOT_URL + adHref;
 		}
 		this.adHref = adHref;

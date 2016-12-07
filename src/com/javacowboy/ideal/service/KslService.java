@@ -139,18 +139,8 @@ public class KslService extends Service {
 	}
     
 	protected Long parseAdId(Element result) {
-		// /classifieds/listing/41761997?cat=405&lpid=&search=Swarovski Binocular&ad_cid=1
-		String startAfter = "listing/";
-		String href = parseAdHref(result);
-		if(href != null) {
-			int begin = href.indexOf(startAfter);
-			int end = href.indexOf("?");
-			if(begin > -1 && end > -1) {
-				begin += startAfter.length();
-				return getLongValue(href.substring(begin, end));
-			}
-		}
-		return null;
+		// <div class="listing" data-item-id="42486770" ...>
+		return getLongValue(result.attr(TagClass.AD_ID.getName()));
 	}
 
 	protected String parseAdHref(Element result) {
@@ -179,17 +169,14 @@ public class KslService extends Service {
 	protected String parseTime(Element result) {
 		String time = parseRawTime(result);
 		if(time != null) {
-			time = time.split("\\|")[1].trim();
+			time = time.replace("|", "").trim();
 		}
 		return time;
 	}
 	
 	protected String parseLocation(Element result) {
-		String time = parseRawTime(result);
-		if(time != null) {
-			time = time.split("\\|")[0].trim();
-		}
-		return time;
+		Element element = result.getElementsByClass(TagClass.AD_LOCATION.getName()).first();
+		return getStringValue(element);
 	}
 	
 	protected String parseRawTime(Element result) {
@@ -220,10 +207,7 @@ public class KslService extends Service {
     	}
     	String value = getStringValue(element);
     	value = value.replace("$", "");
-    	//the last 2 numbers should be cents
-    	String part1 = value.substring(0, value.length() -2);
-    	String part2 = value.substring(value.length() -2, value.length());
-    	return getFloatValue(part1 + "." + part2);
+    	return getFloatValue(value);
     }
     
     protected Float getFloatValue(String value) {
@@ -280,14 +264,16 @@ public class KslService extends Service {
      */
     protected enum TagClass {
     	//outputs
-    	RESULTS_CONTAINER("listings"), //all results
-    	RESULT_CONTAINER("adBox"), //individual result
+    	RESULTS_CONTAINER("listing-group"), //all results
+    	RESULT_CONTAINER("listing"), //individual result
+    	AD_ID("data-item-id"),
     	AD_DETAILS("detailBox"),
-    	AD_TITLE("adTitle"),
-    	AD_IMAGE("adImage"),
-    	AD_TIME("adTime"),
-    	AD_DESC("adDesc"),
-    	AD_PRICE("priceBox");
+    	AD_TITLE("title"),
+    	AD_IMAGE("photo"),
+    	AD_TIME("timeOnSite"),
+    	AD_DESC("description"),
+    	AD_LOCATION("address"),
+    	AD_PRICE("price");
     	
     	private String name;
     	private TagClass(String name) {

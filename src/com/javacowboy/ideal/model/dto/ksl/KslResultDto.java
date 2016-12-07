@@ -7,7 +7,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class KslResultDto {
 	
-	public static final String ROOT_URL = "http://www.ksl.com";
+	public static final String PROTOCOL = "http:";
+	public static final String ROOT_URL = PROTOCOL + "//www.ksl.com";
 	
 	protected Float price;
 	protected Float originalPrice; //set when db comparison happens
@@ -35,6 +36,9 @@ public class KslResultDto {
 	}
 
 	public void setImageHref(String imageHref) {
+		if(imageHref.startsWith("//")) {
+			imageHref = PROTOCOL + imageHref;
+		}
 		this.imageHref = imageHref;
 	}
 

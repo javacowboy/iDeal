@@ -1,11 +1,15 @@
 <list>
   <ksl>
-    <subCategory>SCOPES_AND_OPTICS</subCategory>
     <keywords>
-      <string>Swarovski</string>
-      <string>Binocular</string>
+      <string>LG</string>
+      <string>G4</string>
     </keywords>
-    <maxPrice>1700</maxPrice>
+    <minPrice>100</minPrice>
+  </ksl>
+  <ksl>
+  	<keywords>
+  		<string>canon mark 3</string>
+  	</keywords>
   </ksl>
   <ksl>
     <subCategory>SCOPES_AND_OPTICS</subCategory>
@@ -21,10 +25,5 @@
       <zipCode>84043</zipCode>
       <miles>25</miles>
     </distance>
-  </ksl>
-  <ksl>
-  	<keywords>
-  		<string>canon mark 3</string>
-  	</keywords>
   </ksl>
 </list>

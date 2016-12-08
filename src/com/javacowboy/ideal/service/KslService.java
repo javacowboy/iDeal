@@ -18,8 +18,8 @@ import com.javacowboy.ideal.model.dto.ksl.KslResultDto;
 public class KslService extends Service {
 	
 	//a GET param that indicates how many results per page
-	public static final String KSL_CLASSIFIED_URL = "http://www.ksl.com/index.php?nid=231";
-	public static final int PRIVATE_SELLER = 0;
+	public static final String KSL_CLASSIFIED_URL = "http://www.ksl.com/classifieds/search/";
+	public static final String PRIVATE_SELLER = "Private";
 	public static final int RESULTS_PER_PAGE = 48;
 	
     public List<KslResultDto> getResults(List<KslParameterDto> params){
@@ -93,18 +93,18 @@ public class KslService extends Service {
 	}
     
     protected String getSearchUrl(KslParameterDto dto) {
-    	
+
     	StringBuilder builder = new StringBuilder();
     	builder.append(KSL_CLASSIFIED_URL);
-    	if(dto.getSubCategory() != null) {
-    		appendIfNotEmpty(builder, QueryKey.CATEGORY.key(), dto.getSubCategory().getCategory().getId());
-    		appendIfNotEmpty(builder, QueryKey.SUBCATEGORY.key(), dto.getSubCategory().getId());
-    	}
-    	if(dto.getCategory() != null) {
-    		appendIfNotEmpty(builder, QueryKey.CATEGORY.key(), dto.getCategory().getId());
-    	}
+//    	if(dto.getSubCategory() != null) {
+//    		appendIfNotEmpty(builder, QueryKey.CATEGORY.key(), dto.getSubCategory().getCategory().getId());
+//    		appendIfNotEmpty(builder, QueryKey.SUBCATEGORY.key(), dto.getSubCategory().getId());
+//    	}
+//    	if(dto.getCategory() != null) {
+//    		appendIfNotEmpty(builder, QueryKey.CATEGORY.key(), dto.getCategory().getId());
+//    	}
     	appendIfNotEmpty(builder, QueryKey.SELLER_TYPE.key(), PRIVATE_SELLER);
-    	appendIfNotEmpty(builder, QueryKey.NUMBER_RESULTS.key(), RESULTS_PER_PAGE);
+//    	appendIfNotEmpty(builder, QueryKey.NUMBER_RESULTS.key(), RESULTS_PER_PAGE);
     	appendIfNotEmpty(builder, QueryKey.KEYWORDS.key(), dto.getSearchString().replace(" ", "+"));
     	appendIfNotEmpty(builder, QueryKey.PRICE_LOW.key(), dto.getMinPrice());
     	appendIfNotEmpty(builder, QueryKey.PRICE_HIGH.key(), dto.getMaxPrice());
@@ -112,7 +112,7 @@ public class KslService extends Service {
 	    	appendIfNotEmpty(builder, QueryKey.ZIPCODE.key(), dto.getDistance().getZipCode());
 	    	appendIfNotEmpty(builder, QueryKey.MILES_FROM_ZIPCODE.key(), dto.getDistance().getMiles());
     	}
-    	return builder.toString();
+    	return builder.toString().replace("/&", "/?");
     }
     
     private void appendIfNotEmpty(StringBuilder builder, String key, Object value) {
@@ -234,20 +234,32 @@ public class KslService extends Service {
      * Url search query keys
      */
     protected enum QueryKey {
-    	/*
-    	 * http://www.ksl.com/index.php?nid=231&sid=74268
-    	 * &cat=185&search=glock+17&zip=84043&distance=25&min_price=300&max_price=500
-    	 * &type=&category=353&subcat=&sold=&city=&addisplay=&sort=1&userid=&markettype=sale&adsstate=&nocache=1
-    	 * &viewSelect=list&viewNumResults=48&sort=1
+    	/* %5B%5D is [] (open and close brackets)
+    	 *  http://www.ksl.com/classifieds/search/
+    	 * 	?keyword=Swarovski+Binocular
+    	 * 	&category%5B%5D=Hunting+and+Fishing
+    	 * 	&subCategory%5B%5D=Scopes+and+Optics
+    	 * 	&priceFrom=1
+    	 * 	&priceTo=1000
+    	 *  &sellerType%5B%5D=Private
+    	 * 	&city=
+    	 * 	&state=UT
+    	 * 	&zip=84043
+    	 * 	&miles=25
+    	 * 	&sort=4
+    	 * 
+    	 *  Per page changes now after results are back.  See if we can still pass it as initial request.
+    	 *  ?perPage=24
+    	 *  
     	 */
-    	CATEGORY("category"),
-    	KEYWORDS("search"),
-    	MILES_FROM_ZIPCODE("distance"),
-    	NUMBER_RESULTS("viewNumResults"),
-    	PRICE_LOW("min_price"),
-    	PRICE_HIGH("max_price"),
-    	SELLER_TYPE("type"),
-    	SUBCATEGORY("cat"),
+    	CATEGORY("category%5B%5D"),
+    	KEYWORDS("keyword"),
+    	MILES_FROM_ZIPCODE("miles"),
+    	NUMBER_RESULTS("perPage"),
+    	PRICE_LOW("priceFrom"),
+    	PRICE_HIGH("priceTo"),
+    	SELLER_TYPE("sellerType%5B%5D"),
+    	SUBCATEGORY("subCategory%5B%5D"),
     	ZIPCODE("zip");
     	
     	private String key;
